@@ -88,30 +88,30 @@ const items = [{
 ];
 
 
-function displayItems(items) {
-    items.forEach(item => {
+function createItemCard(item) {
+    const itemElement = template.cloneNode(true);
 
-        const itemElement = template.cloneNode(true);
+    itemElement.querySelector('img').src = item.img;
+    itemElement.querySelector('h1').textContent = item.title;
+    itemElement.querySelector('p').textContent = item.description;
+    itemElement.querySelector('.price').textContent = `${item.price} ₽`;
 
-
-        itemElement.querySelector('img').src = item.img;
-        itemElement.querySelector('h1').textContent = item.title;
-        itemElement.querySelector('p').textContent = item.description;
-        itemElement.querySelector('.price').textContent = `${item.price} ₽`;
-
-
-        const tagsContainer = itemElement.querySelector('.tags');
-        item.tags.forEach(tag => {
-            const tagElement = document.createElement('span');
-            tagElement.className = 'tag';
-            tagElement.textContent = tag;
-            tagsContainer.appendChild(tagElement);
-        });
-
-
-        shopItemsContainer.appendChild(itemElement);
+    const tagsContainer = itemElement.querySelector('.tags');
+    item.tags.forEach(tag => {
+        const tagElement = document.createElement('span');
+        tagElement.className = 'tag';
+        tagElement.textContent = tag;
+        tagsContainer.appendChild(tagElement);
     });
+
+    return itemElement;
 }
 
+function displayItems(items) {
+    items.forEach(item => {
+        const itemCard = createItemCard(item);
+        shopItemsContainer.appendChild(itemCard);
+    });
+}
 
 displayItems(items);
